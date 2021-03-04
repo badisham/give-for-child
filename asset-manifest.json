@@ -1,23 +1,26 @@
 {
   "files": {
-    "main.css": "/give-for-child/static/css/main.9d5b29c0.chunk.css",
-    "main.js": "/give-for-child/static/js/main.5261fd9a.chunk.js",
-    "main.js.map": "/give-for-child/static/js/main.5261fd9a.chunk.js.map",
-    "runtime-main.js": "/give-for-child/static/js/runtime-main.712ee197.js",
-    "runtime-main.js.map": "/give-for-child/static/js/runtime-main.712ee197.js.map",
-    "static/js/2.1d100880.chunk.js": "/give-for-child/static/js/2.1d100880.chunk.js",
-    "static/js/2.1d100880.chunk.js.map": "/give-for-child/static/js/2.1d100880.chunk.js.map",
-    "static/js/3.a3d2f66e.chunk.js": "/give-for-child/static/js/3.a3d2f66e.chunk.js",
-    "static/js/3.a3d2f66e.chunk.js.map": "/give-for-child/static/js/3.a3d2f66e.chunk.js.map",
+    "main.css": "/give-for-child/static/css/main.f01abd21.chunk.css",
+    "main.js": "/give-for-child/static/js/main.9b95e6c9.chunk.js",
+    "main.js.map": "/give-for-child/static/js/main.9b95e6c9.chunk.js.map",
+    "runtime-main.js": "/give-for-child/static/js/runtime-main.c0f088ef.js",
+    "runtime-main.js.map": "/give-for-child/static/js/runtime-main.c0f088ef.js.map",
+    "static/css/2.02c099a1.chunk.css": "/give-for-child/static/css/2.02c099a1.chunk.css",
+    "static/js/2.e503a558.chunk.js": "/give-for-child/static/js/2.e503a558.chunk.js",
+    "static/js/2.e503a558.chunk.js.map": "/give-for-child/static/js/2.e503a558.chunk.js.map",
+    "static/js/3.ce228746.chunk.js": "/give-for-child/static/js/3.ce228746.chunk.js",
+    "static/js/3.ce228746.chunk.js.map": "/give-for-child/static/js/3.ce228746.chunk.js.map",
     "index.html": "/give-for-child/index.html",
-    "static/css/main.9d5b29c0.chunk.css.map": "/give-for-child/static/css/main.9d5b29c0.chunk.css.map",
-    "static/js/2.1d100880.chunk.js.LICENSE.txt": "/give-for-child/static/js/2.1d100880.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/give-for-child/static/media/logo.6ce24c58.svg"
+    "static/css/2.02c099a1.chunk.css.map": "/give-for-child/static/css/2.02c099a1.chunk.css.map",
+    "static/css/main.f01abd21.chunk.css.map": "/give-for-child/static/css/main.f01abd21.chunk.css.map",
+    "static/js/2.e503a558.chunk.js.LICENSE.txt": "/give-for-child/static/js/2.e503a558.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/give-for-child/static/media/Mitr-SemiBold.453ef92c.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.712ee197.js",
-    "static/js/2.1d100880.chunk.js",
-    "static/css/main.9d5b29c0.chunk.css",
-    "static/js/main.5261fd9a.chunk.js"
+    "static/js/runtime-main.c0f088ef.js",
+    "static/css/2.02c099a1.chunk.css",
+    "static/js/2.e503a558.chunk.js",
+    "static/css/main.f01abd21.chunk.css",
+    "static/js/main.9b95e6c9.chunk.js"
   ]
 }
