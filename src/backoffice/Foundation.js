@@ -57,11 +57,6 @@ const Foundation = () => {
                     </a>
                 </td>
                 <td>{data.address}</td>
-                <td>
-                    <Link to={`/backend/foundation/${data.name}`}>
-                        <button className='btn btn-info'>Catagory</button>
-                    </Link>
-                </td>
                 
             {localStorage.getItem('username') == 'admin' ? (
                 <td>
@@ -73,7 +68,12 @@ const Foundation = () => {
                     >
                         ลบ
                     </Button>
-                </td>) : ''}
+                </td>) : (
+                <td>
+                    <Link to={`/backend/foundation/${data.name}`}>
+                        <button className='btn btn-info'>Catagory</button>
+                    </Link>
+                </td>)}
             </tr>
         );
     };
@@ -187,9 +187,6 @@ const Foundation = () => {
                                 <th width='200'>ชื่อ</th>
                                 <th width='350'></th>
                                 <th width='80'></th>
-                                
-                                {localStorage.getItem('username') == 'admin' ? (
-                                <th width='80'></th>) : ''}
                             </tr>
                         </thead>
                         <tbody>{rowData.map((v) => setRow(v))}</tbody>
