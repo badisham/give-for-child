@@ -47,8 +47,7 @@ const HeaderBackend = () => {
                 {/* <h4>{localStorage.getItem('username')}</h4> */}
             </div>
             
-            {localStorage.getItem('username') == 'admin' ? (
-                <div className="wrap_nav">
+            <div className="wrap_nav">
                     <div className="wrap_nav_text">
                         <Link onClick={(e)=>{ setNavActive('foundation') }} to='/backend/foundation'>
                             <BsFillBriefcaseFill className={'title'} />
@@ -57,7 +56,6 @@ const HeaderBackend = () => {
                         </Link>
                     </div>
                 </div>
-            ) : null}
 
             {localStorage.getItem('username') == 'admin' ? (
                 <div className="wrap_nav">
