@@ -146,6 +146,7 @@ const BookingBack = () => {
     }
     
     
+    
     const sendMail = () => {
         axios.get(`/booking/sendmail`).then((res) => {
             Swal.fire({

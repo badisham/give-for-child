@@ -63,6 +63,19 @@ const DonateBack = () => {
                 console.log(err);
             });
     };
+    
+    const sendMail = () => {
+        axios.get(`/donation/sendmail`).then((res) => {
+            Swal.fire({
+                title: 'ส่ง Email เรียบร้อย',
+                icon: 'success',
+                confirmButtonColor: 'Green',
+                confirmButtonText: 'ตกลง',
+            }).then((result) => {
+                
+            });
+        });
+    }
 
     const setRow = (data) => {
         // ใส่ชื่อ column ทั้งหมดตาม table
@@ -168,7 +181,7 @@ const DonateBack = () => {
                             </Form>
                         </Col>
                         <Col col={6} inline>
-                            <Button style={{float:'right',width:250}}>ส่ง Email แจ้งเตือนสำหรับวันนี้</Button>
+                            <Button style={{float:'right',width:250}} onClick={sendMail}>ส่ง Email แจ้งเตือนสำหรับวันนี้</Button>
                         </Col>
                     </Row>
 
