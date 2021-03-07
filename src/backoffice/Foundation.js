@@ -21,7 +21,7 @@ const Foundation = () => {
     const updateRows = async () => {
         try {
             await axios
-                .get(`/foundation`)
+                .get(`/foundation/${localStorage.getItem('foundation')}`)
                 .then(function (res) {
                     if (res.data) {
                         setRowData(res.data);
@@ -62,6 +62,8 @@ const Foundation = () => {
                         <button className='btn btn-info'>Catagory</button>
                     </Link>
                 </td>
+                
+            {localStorage.getItem('username') == 'admin' ? (
                 <td>
                     <Button
                         className='btn btn-danger'
@@ -71,7 +73,7 @@ const Foundation = () => {
                     >
                         ลบ
                     </Button>
-                </td>
+                </td>) : ''}
             </tr>
         );
     };
@@ -185,7 +187,9 @@ const Foundation = () => {
                                 <th width='200'>ชื่อ</th>
                                 <th width='350'></th>
                                 <th width='80'></th>
-                                <th width='80'></th>
+                                
+                                {localStorage.getItem('username') == 'admin' ? (
+                                <th width='80'></th>) : ''}
                             </tr>
                         </thead>
                         <tbody>{rowData.map((v) => setRow(v))}</tbody>
