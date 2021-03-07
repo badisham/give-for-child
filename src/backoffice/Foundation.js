@@ -163,11 +163,13 @@ const Foundation = () => {
             <div style={{ padding: '3rem' }}>
                 <Card style={{ padding: '1.5rem' }}>
                     <Card.Title>มูลนิธิ</Card.Title>
+                    
+                        {localStorage.getItem('username') == 'admin' ? (
                     <div>
                         <Button variant='primary' onClick={handleShow}>
                             เพิ่ม
                         </Button>
-                    </div>
+                    </div>): ''}
 
                     {/* <Form inline>
                         <label>Search</label>
