@@ -102,7 +102,7 @@ function Booking() {
     useEffect(() => {
         if (foundationSelect != 0) {
             let ops = cat.map((v) => {
-                if (v.foundation_name == foundationSelect) {
+                if (v.foundation == foundationSelect) {
                     return Option(v.name, v.name);
                 }
             });
