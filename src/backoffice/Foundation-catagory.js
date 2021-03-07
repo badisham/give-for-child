@@ -75,7 +75,7 @@ const Catagory = (props) => {
         }
         const data = {
             name: name,
-            foundation_name: props.match.params.name,
+            foundation: localStorage.getItem('foundation'),
         };
         try {
             await axios

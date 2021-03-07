@@ -51,26 +51,24 @@ const GenerateJson = () => {
                                   
                             }
 
-
-
-                            return{
-                                defaultAction: {
-                                    label: "รายละเอียด",
-                                    uri: f.url,
-                                    type: "uri"
-                                },
-                                text: LimitString(f.address,40),
-                                title: LimitString(f.name,20),
-                                actions: [
-                                  {
-                                    type: "uri",
-                                    uri: f.url,
-                                    label: "รายละเอียด"
-                                  }
-                                ],
-                                thumbnailImageUrl: HOST_URL_IMG + f.img,
-                                imageBackgroundColor: "#FFFFFF"
-                              }
+                            // return{
+                            //     defaultAction: {
+                            //         label: "รายละเอียด",
+                            //         uri: f.url,
+                            //         type: "uri"
+                            //     },
+                            //     text: LimitString(f.address,40),
+                            //     title: LimitString(f.name,20),
+                            //     actions: [
+                            //       {
+                            //         type: "uri",
+                            //         uri: f.url,
+                            //         label: "รายละเอียด"
+                            //       }
+                            //     ],
+                            //     thumbnailImageUrl: HOST_URL_IMG + f.img,
+                            //     imageBackgroundColor: "#FFFFFF"
+                            //   }
                         });
                         obj = {
                             line: {
