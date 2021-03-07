@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { Link } from 'react-router-dom';
-import { Table, Form, FormControl, Button, Card } from 'react-bootstrap';
+import { Table, Form, FormControl, Button, Card, Row, Col } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 import './css/ActivityBack.css';
 import axios from 'axios';
@@ -154,17 +154,23 @@ const DonateBack = () => {
             <div style={{ padding: '3rem' }}>
                 <Card style={{ padding: '1.5rem' }}>
                     <Card.Title>รับบริจาคสิ่งของ</Card.Title>
-
-                    <Form inline>
-                        <FormControl
-                            type='text'
-                            placeholder='ค้นหาชื่อผู้บริจาค'
-                            className=' mr-sm-2'
-                            style={{ marginLeft: '2%', marginTop: '1.5%' }}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        {/* <Button type='submit'>Submit</Button> */}
-                    </Form>
+                    <Row>
+                        <Col col={6}>
+                            <Form inline>
+                                <FormControl
+                                    type='text'
+                                    placeholder='ค้นหาชื่อผู้เข้าร่วม'
+                                    className=' mr-sm-2'
+                                    style={{ marginLeft: '2%', marginTop: '1.5%' }}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                                {}
+                            </Form>
+                        </Col>
+                        <Col col={6} inline>
+                            <Button style={{float:'right',width:250}}>ส่ง Email แจ้งเตือนสำหรับวันนี้</Button>
+                        </Col>
+                    </Row>
 
                     <Table striped hover style={{ marginTop: '1.5%' }}>
                         <thead>

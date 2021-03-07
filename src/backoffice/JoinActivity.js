@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Form, FormControl, Button, Card } from 'react-bootstrap';
+import { Table, Form, FormControl, Button, Card,Col,Row } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 import './css/ActivityBack.css';
 import axios from 'axios';
@@ -95,6 +95,21 @@ const JoinActivity = () => {
         });
     }
 
+    
+    const sendMail = () => {
+        axios.get(`/join_activity/sendmail`).then((res) => {
+            Swal.fire({
+                title: 'ส่ง Email เรียบร้อย',
+                icon: 'success',
+                confirmButtonColor: 'Green',
+                confirmButtonText: 'ตกลง',
+            }).then((result) => {
+                
+            });
+        });
+    }
+
+
     const setRow = (data) => {
         // ใส่ชื่อ column ทั้งหมดตาม table
         return (
@@ -146,18 +161,23 @@ const JoinActivity = () => {
             <div style={{ padding: '3rem' }}>
                 <Card style={{ padding: '1.5rem' }}>
                     <Card.Title>ข้อมูลการเข้าร่วมกิจกรรม</Card.Title>
-
-                    <Form inline>
-                        <FormControl
-                            type='text'
-                            placeholder='ค้นหาชื่อผู้เข้าร่วม'
-                            className=' mr-sm-2'
-                            style={{ marginLeft: '2%', marginTop: '1.5%' }}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        {}
-                    </Form>
-
+                    <Row>
+                        <Col col={6}>
+                            <Form inline>
+                                <FormControl
+                                    type='text'
+                                    placeholder='ค้นหาชื่อผู้เข้าร่วม'
+                                    className=' mr-sm-2'
+                                    style={{ marginLeft: '2%', marginTop: '1.5%' }}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                                {}
+                            </Form>
+                        </Col>
+                        <Col col={6} inline>
+                            <Button style={{float:'right',width:250}} onClick={sendMail}>ส่ง Email แจ้งเตือนสำหรับวันนี้</Button>
+                        </Col>
+                    </Row>
                     <Table striped hover style={{ marginTop: '1.5%' }}>
                         <thead>
                             <tr>

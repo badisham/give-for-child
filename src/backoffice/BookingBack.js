@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Form, InputGroup, FormControl, Button, Card, Modal, Row } from 'react-bootstrap';
+import { Table, Form, Col, FormControl, Button, Card, Modal, Row } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 import './css/ActivityBack.css';
 import axios from 'axios';
@@ -144,6 +144,22 @@ const BookingBack = () => {
             });
         });
     }
+    
+    
+    const sendMail = () => {
+        axios.get(`/booking/sendmail`).then((res) => {
+            Swal.fire({
+                title: 'ส่ง Email เรียบร้อย',
+                icon: 'success',
+                confirmButtonColor: 'Green',
+                confirmButtonText: 'ตกลง',
+            }).then((result) => {
+                
+            });
+        });
+    }
+    
+
     return (
         <div
             className='all-font'
@@ -156,19 +172,23 @@ const BookingBack = () => {
             <div style={{ padding: '3rem' }}>
                 <Card style={{ padding: '1.5rem' }}>
                     <Card.Title>การจอง</Card.Title>
-                    <Form inline>
-                        <FormControl
-                            type='text'
-                            placeholder='ค้นหาชื่อผู้จอง'
-                            className=' mr-sm-2'
-                            style={{ marginLeft: '2%', marginTop: '1.5%' }}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                            }}
-                        />
-                        {/* <Button type='submit'>Submit</Button> */}
-                    </Form>
-
+                    <Row>
+                        <Col col={6}>
+                            <Form inline>
+                                <FormControl
+                                    type='text'
+                                    placeholder='ค้นหาชื่อผู้เข้าร่วม'
+                                    className=' mr-sm-2'
+                                    style={{ marginLeft: '2%', marginTop: '1.5%' }}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                                {}
+                            </Form>
+                        </Col>
+                        <Col col={6} inline>
+                            <Button style={{float:'right',width:250}} onClick={sendMail}>ส่ง Email แจ้งเตือนสำหรับวันนี้</Button>
+                        </Col>
+                    </Row>
                     <Table striped hover style={{ marginTop: '1.5%' }}>
                         <thead>
                             <tr>

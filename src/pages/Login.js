@@ -14,8 +14,8 @@ function Login() {
 
     const LINE_LOGIN_CHANNEL_ID = 1655298880;
     const LINE_LOGIN_CHANNEL_SECRET = '055d4867b89e964d48dc1874c2da427f';
-    // const LINE_LOGIN_CALLBACK_URL = 'http://localhost:3000/login';
-    const LINE_LOGIN_CALLBACK_URL = 'https://give-for-child.thesis-su2020ict.com/login';
+    const LINE_LOGIN_CALLBACK_URL = 'http://localhost:3000/login';
+    // const LINE_LOGIN_CALLBACK_URL = 'https://give-for-child.thesis-su2020ict.com/login';
 
     function onGetAccount(account) {
         if (!account.sub || !account.picture || !account.name) return;
