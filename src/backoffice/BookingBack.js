@@ -1,40 +1,12 @@
 import React, { useState, useEffect, Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Form, InputGroup, FormControl, Button, Card, Pagination, Row } from 'react-bootstrap';
+import { Table, Form, InputGroup, FormControl, Button, Card, Modal, Row } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 import './css/ActivityBack.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
 
-const cencelActivity = (id) => {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios.delete(`/booking/${id}/`).then((res) => {
-                Swal.fire({
-                    title: 'Deleted!',
-                    text: 'Your file has been deleted.',
-                    icon: 'success',
-                    confirmButtonColor: 'Green',
-                    confirmButtonText: 'Ok',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.reload();
-                    }
-                });
-            });
-        }
-    });
-};
 
 const DateThai = (date) => {
     return date.toLocaleDateString('th-TH', {
@@ -63,6 +35,13 @@ const BookingBack = () => {
                 console.log(err);
             });
     };
+
+    const [showSlip, setShowSlip] = useState(false);
+    const [imgSilp, setImgSilp] = useState(null);
+    
+    const onClickSlipShow = () => setShowSlip(true);
+    const onClickSlipClose = () => setShowSlip(false);
+
     const setRow = (data) => {
         // ใส่ชื่อ column ทั้งหมดตาม table
         return (
@@ -73,6 +52,11 @@ const BookingBack = () => {
                 <td>{data.tel}</td>
                 <td>{data.location}</td>
                 <td>{DateThai(new Date(data.date))}</td>
+                <td>
+                {data.slip ? (<Button variant='primary' onClick={() => {onClickSlipShow(); setImgSilp(data.slip)}}>
+                            ดู Slip
+                        </Button>) : ''}
+                </td>
                 <td>
                     {data.is_success ? (
                         <Button variant='warning' disabled>
@@ -90,14 +74,13 @@ const BookingBack = () => {
                     )}
                 </td>
                 <td>
-                    <Button
+                    <Button 
                         onClick={() => {
-                            cencelActivity(data.id);
+                            confirm(()=> {cancelBooking(data.id);})
                         }}
-                        variant='none'
-                        style={{ backgroundColor: 'red' }}
+                        variant='outline-danger'
                     >
-                        <BsTrash style={{ color: 'white' }} />
+                        <BsTrash/>
                     </Button>
                 </td>
             </tr>
@@ -114,9 +97,12 @@ const BookingBack = () => {
     }, [search]);
 
     const updateRows = async () => {
-        const searchParam = search ? `?search=${search}` : '';
+        let data = {
+            foundation: localStorage.getItem('foundation'),
+            search: search
+        }
         axios
-            .get(`/booking/foundation/${localStorage.getItem('foundation')}${searchParam}`)
+            .post(`/booking/foundation/`,data)
             .then((res) => {
                 if (res.data) {
                     setRowData(res.data.map((v) => setRow(v)));
@@ -126,6 +112,38 @@ const BookingBack = () => {
                 console.log(err);
             });
     };
+    
+    const confirm = (methed) => {
+        Swal.fire({
+            title: 'ยืนยัน',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0062cc',
+            cancelButtonColor: '#ccc',
+            confirmButtonText: 'ลบ',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                methed();
+            }
+        });
+    };
+
+    const cancelBooking = async (id) => {
+        await axios.delete(`/booking/${id}/`).then((res) => {
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Your file has been deleted.',
+                icon: 'success',
+                confirmButtonColor: 'Green',
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
+        });
+    }
     return (
         <div
             className='all-font'
@@ -154,12 +172,13 @@ const BookingBack = () => {
                     <Table striped hover style={{ marginTop: '1.5%' }}>
                         <thead>
                             <tr>
-                                <th>id</th>
+                                <th>ID</th>
                                 <th>ชื่อกิจกรรม</th>
                                 <th>ชื่อผู้จอง</th>
                                 <th>เบอร์โทรศัพท์</th>
                                 <th>สถานที่</th>
                                 <th>วันและเวลา</th>
+                                <th></th>
                                 <th>ตัวเลือก</th>
                                 <th></th>
                             </tr>
@@ -168,6 +187,14 @@ const BookingBack = () => {
                     </Table>
                 </Card>
             </div>
+            <Modal show={showSlip} onHide={onClickSlipClose}>
+                <Modal.Header closeButton>
+                    {/* <Modal.Title>เพิ่ม</Modal.Title> */}
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="img_slip" style={{backgroundImage: `url(../resources/uploads/${imgSilp})`}}></div>
+                </Modal.Body>
+            </Modal>
         </div>
     );
 };

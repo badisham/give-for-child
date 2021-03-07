@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BsFillPersonFill, BsPeopleCircle } from 'react-icons/bs';
+import { BsFillBriefcaseFill, BsPeopleCircle,BsFillCaretLeftFill,BsCodeSlash,BsAward,BsPeopleFill,BsFillCalendarFill,BsFillGiftFill,BsBoxArrowRight } from 'react-icons/bs';
 import axios from 'axios';
 
 import '../css/HeaderBackend.css';
 
 const HeaderBackend = () => {
+    const [navActive, setNavActive] = useState('');
+
     return (
         <div
             className='all-font'
@@ -44,94 +46,112 @@ const HeaderBackend = () => {
             >
                 {/* <h4>{localStorage.getItem('username')}</h4> */}
             </div>
-
+            
             {localStorage.getItem('username') == 'admin' ? (
-                <div style={{ width: '100%', height: '40px' }}>
-                    <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                        <Link to='/backend/member' style={{ color: 'white' }}>
-                            <BsPeopleCircle className={'title'} />
-                            ผู้เข้าร่วม Line official
+                <div className="wrap_nav">
+                    <div className="wrap_nav_text">
+                        <Link onClick={(e)=>{ setNavActive('foundation') }} to='/backend/foundation'>
+                            <BsFillBriefcaseFill className={'title'} />
+                            มูลนิธิ
+                            {navActive == 'foundation'? <BsFillCaretLeftFill className={'title'} /> :''}
                         </Link>
                     </div>
                 </div>
             ) : null}
 
-            <div style={{ width: '100%', height: '40px' }}>
-                <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                    <Link to='/backend/admin-foundation' style={{ color: 'white' }}>
+            {localStorage.getItem('username') == 'admin' ? (
+                <div className="wrap_nav">
+                    <div className="wrap_nav_text">
+                        <Link onClick={(e)=>{ setNavActive('generate-json') }} to='/backend/generate-json'>
+                            <BsCodeSlash className={'title'} />
+                            สร้าง JSON Dialogflow
+                            {navActive == 'generate-json'? <BsFillCaretLeftFill className={'title'} /> :''}
+                        </Link>
+                    </div>
+                </div>
+            ) : null}
+
+            <div className="wrap_nav">
+                <div className="wrap_nav_text">
+                    <Link onClick={(e)=>{ setNavActive('admin-foundation') }} to='/backend/admin-foundation'>
                         <BsPeopleCircle className={'title'} />
                         ผู้จัดการมูลนิธิ
+                            {navActive == 'admin-foundation'? <BsFillCaretLeftFill className={'title'} /> :''}
                     </Link>
                 </div>
             </div>
+            {localStorage.getItem('username') == 'admin' ? (
+                <div className="wrap_nav">
+                    <div className="wrap_nav_text">
+                        <Link onClick={(e)=>{ setNavActive('member') }} to='/backend/member'>
+                            <BsPeopleCircle className={'title'} />
+                            ผู้เข้าร่วม Line official
+                            {navActive == 'member'? <BsFillCaretLeftFill className={'title'} /> :''}
+                        </Link>
+                    </div>
+                </div>
+            ) : null}
 
-            <div style={{ width: '100%', height: '40px' }}>
-                <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                    <Link to='/backend/activity-back' style={{ color: 'white' }}>
-                        <BsPeopleCircle className={'title'} />
+            <div className="wrap_nav">
+                <div className="wrap_nav_text">
+                    <Link onClick={(e)=>{ setNavActive('activity-back') }} to='/backend/activity-back'>
+                        <BsAward className={'title'} />
                         กิจกรรม
+                            {navActive == 'activity-back'? <BsFillCaretLeftFill className={'title'} /> :''}
                     </Link>
                 </div>
             </div>
 
-            <div className='button-link' style={{ width: '100%', height: '40px' }}>
-                <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                    <Link to='/backend/join-activity' style={{ color: 'white' }}>
-                        <BsPeopleCircle className={'title'} />
+            <div className='button-link' className="wrap_nav">
+                <div className="wrap_nav_text">
+                    <Link onClick={(e)=>{ setNavActive('join-activity') }} to='/backend/join-activity'>
+                        <BsPeopleFill className={'title'} />
                         เข้าร่วมกิจกรรม
+                            {navActive == 'join-activity'? <BsFillCaretLeftFill className={'title'} /> :''}
                     </Link>
                 </div>
             </div>
 
             <div style={{ width: '100%', height: '40px', backgroundColor: '#2C2C2C' }}>
-                <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                    <Link to='/backend/booking-back' style={{ color: 'white' }}>
-                        <BsPeopleCircle className={'title'} />
+                <div className="wrap_nav_text">
+                    <Link onClick={(e)=>{ setNavActive('booking-back') }} to='/backend/booking-back'>
+                        <BsFillCalendarFill className={'title'} />
                         การจอง
+                            {navActive == 'booking-back'? <BsFillCaretLeftFill className={'title'} /> :''}
                     </Link>
                 </div>
             </div>
 
             <div style={{ width: '100%', height: '40px', backgroundColor: '#2C2C2C' }}>
-                <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                    <Link to='/backend/donate-back' style={{ color: 'white' }}>
-                        <BsPeopleCircle className={'title'} />
+                <div className="wrap_nav_text">
+                    <Link onClick={(e)=>{ setNavActive('donate-back') }} to='/backend/donate-back'>
+                        <BsFillGiftFill className={'title'} />
                         การบริจาค
+                            {navActive == 'donate-back'? <BsFillCaretLeftFill className={'title'} /> :''}
                     </Link>
                 </div>
             </div>
 
             {/* <div style={{ width: '100%', height: '40px', backgroundColor: '#2C2C2C' }}>
-                <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                    <Link to='/backend/create-foundation' style={{ color: 'white' }}>
+                <div className="wrap_nav_text">
+                    <Link onClick={(e)=>{ setNavActive('foundation') }} to='/backend/create-foundation'>
                         <BsPeopleCircle className={'title'} />
                         สร้างมูลนิธิ
                     </Link>
                 </div>
             </div> */}
             {/* <div style={{ width: '100%', height: '40px', backgroundColor: '#2C2C2C' }}>
-                <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                    <Link to='/backend/create-admin' style={{ color: 'white' }}>
+                <div className="wrap_nav_text">
+                    <Link onClick={(e)=>{ setNavActive('foundation') }} to='/backend/create-admin'>
                         <BsPeopleCircle className={'title'} />
                         สร้างผู้ใช้งานมูลนิธิ
                     </Link>
                 </div>
             </div> */}
-            {localStorage.getItem('username') == 'admin' ? (
-                <div style={{ width: '100%', height: '40px', backgroundColor: '#2C2C2C' }}>
-                    <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                        <Link to='/backend/foundation' style={{ color: 'white' }}>
-                            <BsPeopleCircle className={'title'} />
-                            มูลนิธิ
-                        </Link>
-                    </div>
-                </div>
-            ) : null}
-
             <div style={{ width: '100%', height: '40px', backgroundColor: '#2C2C2C' }}>
-                <div style={{ marginLeft: '8%', paddingTop: '2%', color: 'white' }}>
-                    <Link to='/backend/logout' style={{ color: 'white' }}>
-                        <BsPeopleCircle className={'title'} />
+                <div className="wrap_nav_text">
+                    <Link onClick={(e)=>{ setNavActive('foundation') }} to='/backend/logout'>
+                        <BsBoxArrowRight className={'title'} />
                         ออกจากระบบ
                     </Link>
                 </div>

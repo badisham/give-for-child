@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar,NavLink } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../pages/css/Header.css';
 import '../pages/css/style.css';
 import Login from '../pages/Login';
 
-const GetLinkAuth = (data) => {
+
+const Header = () => {
+    const [navActive, setNavActive] = useState('');
+    const GetLinkAuth = (data) => {
     if (localStorage.getItem('id')) {
         return (
-            <Link className='nav-link' to={data.path}>
+            <Link className="nav-link" onClick={(e) => { let link = e.target.href.split('/')[3]; setNavActive('/'+link)}} to={data.path}>
                 {data.name}
+                {data.path === navActive ? (<div style={{width:'100%', height:3,backgroundColor:'#737373'}}></div>) : ''}
             </Link>
         );
     } else {
@@ -30,8 +34,6 @@ const LinkNoneAuth = (data) => {
         return '';
     }
 };
-
-const Header = () => {
     const onErrorLogo = (e) => {
         e.target.src = '/resources/logo.png';
     };
@@ -47,6 +49,7 @@ const Header = () => {
                 <Navbar.Toggle aria-controls='basic-navbar-nav' />
                 <Navbar.Collapse id='basic-navbar-nav'>
                     <Nav className='mr-auto' style={{ textAlign: 'center' }}>
+                        <GetLinkAuth path='/' name='หน้าแรก' />
                         <GetLinkAuth path='/activity' name='กิจกรรม' />
                         <GetLinkAuth path='/booking' name='จองกิจกรรม' />
                         <GetLinkAuth path='/donate' name='การบริจาค' />

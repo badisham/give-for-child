@@ -1,5 +1,5 @@
 .all-font {
-  font-family: 'mitr';
+  font-family: "mitr";
   font-weight: 300;
 }
 
@@ -24,28 +24,13 @@ img {
 }
 
 .main-menu {
-  width: 50%;
-  padding: 5%;
+  width: 33%;
+  padding: 3%;
   border-radius: 40px;
 }
 .banner-test {
   width: 100%;
   height: 50%;
-}
-.footer {
-  width: 100%;
-  height: 10rem;
-  background-color: #ffffff;
-  font-size: 13px;
-  margin-top: 8%;
-  color: rgba(111, 111, 111, 0.961);
-}
-.footer img {
-  text-align: center;
-}
-.link-footer {
-  color: gray;
-  font-weight: 400;
 }
 .copy {
   padding-top: 3%;
@@ -61,7 +46,7 @@ img {
   margin: 50px 0;
 }
 
-._RU-K2{
+._RU-K2 {
   /* width: 180px;
   height: 52px;
   background-size: 100% auto; */
@@ -73,3 +58,20 @@ img {
   background-size: 100% auto;
   opacity: .6;
 } */
+
+.carousel-item {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+  min-height: 300px;
+}
+
+@media (max-width: 900px) {
+  .carousel-item {
+    background-size: auto 100%;
+    min-height: 300px;
+  }
+  .wrap-content-home {
+    padding: 10px;
+  }
+}

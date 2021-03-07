@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import './css/LoginAdmin.css';
-import { Row, Container, Col, Jumbotron, Button } from 'react-bootstrap';
+import { Row, Container, Col, Jumbotron, Button,Form } from 'react-bootstrap';
 
 import Swal from 'sweetalert2';
 import { Link, useHistory } from 'react-router-dom';
@@ -75,16 +75,21 @@ const CreateAdmin = () => {
                                     }}
                                 />
                             </div>
-                            <div className='form-group'>
-                                <label>มูลนิธิ</label>
-                                <select onChange={(e) => setFoundation(e.target.value)}>
+                            <Form.Group controlId="form.foundation">
+                                <Form.Label>มูลนิธิ</Form.Label>
+                                <Form.Control as="select" onChange={(e) => setFoundation(e.target.value)} >
                                     <option value=''>เลือก</option>
                                     {dropdown.map((v) => {
                                         return <option value={v.name}>{v.name}</option>;
                                     })}
+                                </Form.Control>
+                            </Form.Group>
+                            {/* <div className='form-group'>
+                                <label>มูลนิธิ</label>
+                                <select onChange={(e) => setFoundation(e.target.value)}>
                                 </select>
-                            </div>
-                            <Button className='buttonW' variant='info' onClick={onSubmit}>
+                            </div> */}
+                            <Button className='buttonW' style={{marginLeft:0}} variant='info' onClick={onSubmit}>
                                 ยืนยัน
                             </Button>
                         </Jumbotron>

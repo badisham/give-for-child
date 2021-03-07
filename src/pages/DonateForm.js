@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Modal, Row, Col } from 'react-bootstrap';
-import { FaHome, FaMapMarkerAlt } from 'react-icons/fa';
-import { Link, useHistory } from 'react-router-dom';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
-import { BsFillPersonFill, BsCalendarFill, BsFillInfoCircleFill } from 'react-icons/bs';
-import { AiFillPhone } from 'react-icons/ai';
-import Datetime from 'react-datetime';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/DonateForm.css';
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3001/';
+
 
 const Option = (value, name) => {
     return (
@@ -90,7 +87,7 @@ function DonateForm() {
 
     return (
         <>
-            <Container className='all-font'>
+            <Container className='all-font mb-5'>
                 <br />
                 <h3>การบริจาค</h3>
                 <br />
@@ -127,7 +124,7 @@ function DonateForm() {
                                     onChange={(e) => {
                                         name = e.target.value;
                                     }}
-                                    placeholder='กรอกชื่อนามสกุล'
+                                    placeholder='ชื่อ - นามสกุล'
                                 />
                             </Form.Group>
                         </Col>
@@ -143,6 +140,7 @@ function DonateForm() {
                                 <Form.Control
                                     className='border-test'
                                     type='none'
+                                    pattern="[0-9]+"
                                     onChange={(e) => {
                                         tel = e.target.value;
                                     }}
@@ -205,117 +203,22 @@ function DonateForm() {
 
                 <Row xs={2} md={4} lg={6}>
                     <Col>
-                        <Button className='buttonW' onClick={onSubmit} variant='info'>
-                            ยืนยัน
-                        </Button>
-                    </Col>
-                    <Col>
                         <Button className='buttonB' variant='info'>
                             กลับ
                         </Button>
                     </Col>
+                    <Col>
+                        <Button className='buttonW' onClick={onSubmit} variant='info'>
+                            ยืนยัน
+                        </Button>
+                    </Col>
                 </Row>
 
-                <div className='footer'>
-                    <Row>
-                        <Col style={{ textAlign: 'center' }}>
-                            <Link to='/'>
-                                <img src='./resources/logo.png' style={{ width: 105 }} alt='' />
-                            </Link>
-                        </Col>
-                        <Col>
-                            ที่ตั้ง : มหาวิทยาลัยศิลปากร เมืองทองธานี
-                            <br />
-                            เลขที่ 80 ถนนป๊อปปูล่า ต.บ้านใหม่ อำเภอปากเกร็ด จังหวัดนนทบุรี 11120
-                            <br />
-                            โทรศัพท์ : 093-165-4886
-                            <br />
-                            E-mail : give-for-child@gmail.com
-                        </Col>
-                        <Col style={{ marginLeft: '5%' }}>
-                            <Link className='link-footer' to='/activity'>
-                                กิจกรรม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/booking'>
-                                จองกิจกรรม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/donate'>
-                                การบริจาค
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/activity-list'>
-                                รายการที่เข้าร่วม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/profile'>
-                                ผู้ใช้งาน
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/logout'>
-                                ออกจากระบบ
-                            </Link>
-                            <br />
-                        </Col>
-                        <Col sm>
-                            <Link to='/'>
-                                <img src='./resources/facebook.png' style={{ width: 23 }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/instagram.png' style={{ width: 23, marginLeft: '6%' }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/twitter.png' style={{ width: 23, marginLeft: '6%' }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/youtube.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                            </Link>
-                        </Col>
-                    </Row>
-                    <div className='copy'>Copyright © 2021 All Rights Reserved | Give-for-chlid</div>
-                </div>
             </Container>
 
-            {/* <ConfirmModal show={modalShow} onHide={() => setModalShow(false)} /> */}
+            <Footer/>
         </>
     );
 }
-
-// function ConfirmModal(props) {
-//   return (
-//     <Modal
-//       {...props}
-//       size='lg'
-//       aria-labelledby='contained-modal-title-vcenter'
-//       centered
-//     >
-//       <Modal.Header closeButton>
-//         <Modal.Title
-//           style={{ textAlign: 'center' }}
-//           id='contained-modal-title-vcenter'
-//         >
-//           ยืนยันข้อมูล
-//         </Modal.Title>
-//       </Modal.Header>
-//       <Row style={{ padding: 20 }}>
-//         <Col md={5} xs={5}>
-//           <Button
-//             onClick={props.onHide}
-//             style={{ width: '100%' }}
-//             variant='secondary'
-//           >
-//             ยกเลิก
-//           </Button>
-//         </Col>
-//         <Col md={{ span: 5, offset: 2 }} xs={{ span: 5, offset: 2 }}>
-//           <Button style={{ width: '100%' }} variant='primary'>
-//             ยืนยัน
-//           </Button>
-//         </Col>
-//       </Row>
-//     </Modal>
-//   );
-//
 
 export default DonateForm;

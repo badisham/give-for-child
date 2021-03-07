@@ -8,7 +8,7 @@ import moment from 'moment';
 
 import Swal from 'sweetalert2';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
+
 
 const DateThai = (date) => {
     return date.toLocaleDateString('th-TH', {
@@ -18,33 +18,6 @@ const DateThai = (date) => {
     });
 };
 
-const cencelActivity = (id) => {
-    Swal.fire({
-        title: 'ลบรายการนี้หรือไม่',
-        text: 'เมื่อรายการนี้ถูกลบ คุณจะไม่สามารถกู้คืนได้',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios.delete(`/donation/${id}/`).then((res) => {
-                Swal.fire({
-                    title: 'ลบข้อมูลสำเร็จ!',
-                    text: 'กด ok เพื่อดำเนินการต่อ',
-                    icon: 'success',
-                    confirmButtonColor: 'Green',
-                    confirmButtonText: 'Ok',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.reload();
-                    }
-                });
-            });
-        }
-    });
-};
 var setTimeOut;
 const DonateBack = () => {
     const [rowData, setRowData] = useState([]);
@@ -63,9 +36,12 @@ const DonateBack = () => {
     }, [search]);
 
     const updateRows = async (search = null) => {
-        const searchParam = search ? `?search=${search}` : '';
+        let data = {
+            foundation: localStorage.getItem('foundation'),
+            search: search
+        }
         axios
-            .get(`/donation/foundation/${localStorage.getItem('foundation')}${searchParam}`)
+            .post(`/donation/foundation/`,data)
             .then((res) => {
                 if (res.data) {
                     setRowData(res.data.map((v) => setRow(v)));
@@ -108,7 +84,9 @@ const DonateBack = () => {
                         <Button
                             variant='success'
                             onClick={() => {
-                                DonateSuccess(data.id);
+                                confirm(() => {
+                                    DonateSuccess(data.id)
+                                })
                             }}
                         >
                             สำเร็จ
@@ -118,7 +96,9 @@ const DonateBack = () => {
                 <td>
                     <Button
                         onClick={() => {
-                            cencelActivity(data.id);
+                            confirm(() => {
+                                cancelDonate(data.id)
+                            })
                         }}
                         variant='outline-danger'
                     >
@@ -128,6 +108,40 @@ const DonateBack = () => {
             </tr>
         );
     };
+
+    
+    const confirm = (methed) => {
+        Swal.fire({
+            title: 'ยืนยัน',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0062cc',
+            cancelButtonColor: '#ccc',
+            confirmButtonText: 'ลบ',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                methed();
+            }
+        });
+    };
+
+    const cancelDonate = (id) => {
+        axios.delete(`/donation/${id}/`).then((res) => {
+            Swal.fire({
+                title: 'ลบข้อมูลสำเร็จ!',
+                text: 'กด ok เพื่อดำเนินการต่อ',
+                icon: 'success',
+                confirmButtonColor: 'Green',
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
+        });
+    }
+
     return (
         <div
             className='all-font'
@@ -155,7 +169,7 @@ const DonateBack = () => {
                     <Table striped hover style={{ marginTop: '1.5%' }}>
                         <thead>
                             <tr>
-                                <th>id</th>
+                                <th>ID</th>
                                 <th>ชื่อผู้บริจาค</th>
                                 <th>เบอร์โทรศัพท์</th>
                                 <th>สถานที่</th>

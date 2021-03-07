@@ -19,6 +19,44 @@ const ThaiDate = (date) => {
     });
 };
 
+
+
+const ActivityDetail = (props) => {
+    const [activity, setActivity] = useState({});
+    useEffect(() => {
+        try {
+            axios
+                .get(`/activity/${props.match.params.id}}`)
+                .then(function (res) {
+                    setActivity(res.data);
+                })
+                .catch(function (err) {});
+        } catch (err) {
+            console.log(err);
+            if (err.response.status === 500) {
+            } else {
+            }
+        }
+    }, []);
+    
+    
+const Confirm = (method) => {
+    Swal.fire({
+        title: 'ยืนยันเข้าร่วม',
+        text: '',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#ccc',
+        confirmButtonText: 'ตกลง',
+        cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            method();
+        }
+    });
+};
+
 const joinActivity = async (activity_id) => {
     const data = {
         activity_id: activity_id,
@@ -43,31 +81,14 @@ const joinActivity = async (activity_id) => {
         }
     }
 };
-
-const ActivityDetail = (props) => {
-    const [activity, setActivity] = useState({});
-    useEffect(() => {
-        try {
-            axios
-                .get(`/activity/${props.match.params.id}}`)
-                .then(function (res) {
-                    setActivity(res.data);
-                })
-                .catch(function (err) {});
-        } catch (err) {
-            console.log(err);
-            if (err.response.status === 500) {
-            } else {
-            }
-        }
-    }, []);
     return (
-        <Container className='all-font'>
+        <div>
+            <Container className='all-font'>
             <br />
 
             <Row>
                 <Col md={4}>
-                    <Link to='/activity'>
+                    <Link onClick={() => { window.history.back()}}>
                         <Row style={{ paddingLeft: '16px' }}>
                             <BsArrowLeftShort size={28} color={'#000000'} />
 
@@ -80,7 +101,7 @@ const ActivityDetail = (props) => {
                 </Col>
             </Row>
 
-            <div className='nav-tabs-50'>
+            <div className='nav-tabs-50 mb-5'>
                 <Row>
                     <Col sm={8}>
                         <Card border='light' className='card shadow' style={{ marginTop: 20 }}>
@@ -92,18 +113,6 @@ const ActivityDetail = (props) => {
                             ></div>
                             <Card.Body>
                                 <Card.Title style={{ fontSize: '22px' }}>{activity.name}</Card.Title>
-
-                                {/* <Card.Text
-                  style={{ fontSize: '14px', fontWeight: '400', marginTop: '' }}
-                >
-                  <div style={{ color: 'Gray' }}>
-                    <p style={{ float: 'left' }}>วันที่เปิด/ปิดรับสมัคร : </p>
-                    <p style={{ color: '#377780' }}>
-                      {moment(start).format('D/MM/YY')} -{' '}
-                      {moment(end).format('D/MM/YY')}
-                    </p>
-                  </div>
-                </Card.Text> */}
 
                                 <Card.Text style={{ fontSize: '14px', fontWeight: '400' }}>
                                     {ThaiDate(new Date(activity.start_time))} - {ThaiDate(new Date(activity.end_time))}
@@ -117,24 +126,6 @@ const ActivityDetail = (props) => {
                     <Col sm={4}>
                         <Card border='light' className='card shadow' style={{ marginTop: 20 }}>
                             <Card.Body>
-                                {/* <Card.Text style={{ fontSize: '16px', fontWeight: '400' }}>
-                  <div>
-                    <p
-                      style={{
-                        float: 'left',
-                        fontSize: '25px',
-                        marginTop: -14,
-                      }}
-                    >
-                      <BsFillPersonFill />
-                    </p>
-                    <p style={{ color: '#377780', paddingRight: 10 }}>
-                      {' '}
-                      คนเข้าร่วมกิจกรรม {activity.person}/{activity.person_max}{' '}
-                      คน
-                    </p>
-                  </div>
-                </Card.Text> */}
 
                                 <Row style={{ paddingLeft: '16px' }}>
                                     <img
@@ -143,9 +134,11 @@ const ActivityDetail = (props) => {
                                         alt=''
                                     />
 
-                                    <div className='text-detail'>สถานที่ :</div>
+                                    <div className='text-detail'>สถานที่ :
+                                    <span className='data-detail'>{activity.location}</span>
+                                    </div>
 
-                                    <div className='data-detail'>{activity.location}</div>
+                                    
                                 </Row>
 
                                 <Row style={{ paddingLeft: '16px', marginTop: '5px' }}>
@@ -198,7 +191,7 @@ const ActivityDetail = (props) => {
                                     </div>
                                 </Row>
                                 <br />
-                                {new Date(activity.start_time) < new Date() ? (
+                                {new Date(activity.start_time) < new Date() && localStorage.getItem('id') != null ? (
                                     <Row>
                                         <Col>
                                             <Button
@@ -209,7 +202,7 @@ const ActivityDetail = (props) => {
                                                 }}
                                                 variant=''
                                                 onClick={() => {
-                                                    joinActivity(activity.id);
+                                                    Confirm(() => {joinActivity(activity.id);} );
                                                 }}
                                                 disabled={activity.person >= activity.person_max}
                                             >
@@ -226,9 +219,10 @@ const ActivityDetail = (props) => {
                         </Card>
                     </Col>
                 </Row>
-                <Footer />
             </div>
         </Container>
+                <Footer />
+        </div>
     );
 };
 

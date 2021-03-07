@@ -4,6 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { Table, Form, InputGroup, FormControl, Button, Card, Pagination, Row, Col } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 import axios from 'axios';
+import { BsArrowLeftShort } from 'react-icons/bs';
+import './css/CreateActivity.css';
 
 const ActivityBack = () => {
     const history = useHistory();
@@ -72,21 +74,20 @@ const ActivityBack = () => {
             }}
         >
             <div className='all-font' style={{ padding: '3rem' }}>
+                <Link to='/backend/activity-back'>
+                    <Row style={{ paddingLeft: '16px' }}>
+                        <BsArrowLeftShort size={28} color={'#000000'} />
+                        <div className='text-back'>ย้อนกลับ </div>
+                    </Row>
+                </Link>
                 <Card style={{ padding: '1.5rem' }}>
-                    <div>
-                        <Button variant='danger'>
-                            <Link to='/backend/activity-back' style={{ color: 'white' }}>
-                                กลับ
-                            </Link>
-                        </Button>
-                    </div>
-                    <Card.Title style={{ marginTop: '2%' }}>สร้างกิจกรรม</Card.Title>
+                    <Card.Title>สร้างกิจกรรม</Card.Title>
                     <Form>
                         <Form.Row>
                             <Col>
                                 <Form.Group controlId='inputImage1'>
                                     <Form.Label>เลือกรูปภาพ</Form.Label>
-                                    <Form.Control type='file' onChange={onImgChange} />
+                                    <Form.Control type='file' style={{fontWeight:100}} onChange={onImgChange} />
                                     {/* <input id='file-img' type='file' name='filepond'  required />
                   <div id='inputImage'></div> */}
                                 </Form.Group>
@@ -120,7 +121,7 @@ const ActivityBack = () => {
                                 <Row>
                                     <Col>
                                         <Form.Group controlId='exampleForm.ControlInput3'>
-                                            <Form.Label>วันที่และเวลาจบกิจกรรม</Form.Label>
+                                            <Form.Label>วันที่เริ่มกิจกรรม</Form.Label>
                                             <Form.Control
                                                 type='datetime-local'
                                                 onChange={(e) => {
@@ -131,7 +132,7 @@ const ActivityBack = () => {
                                     </Col>
                                     <Col>
                                         <Form.Group controlId='exampleForm.ControlInput4'>
-                                            <Form.Label>วันที่และเวลาจบกิจกรรม</Form.Label>
+                                            <Form.Label>วันที่จบกิจกรรม</Form.Label>
                                             <Form.Control
                                                 type='datetime-local'
                                                 onChange={(e) => {

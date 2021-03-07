@@ -6,7 +6,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { BsArrowLeftShort } from 'react-icons/bs';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
+
 
 const Catagory = (props) => {
     const [rowData, setRowData] = useState([]);

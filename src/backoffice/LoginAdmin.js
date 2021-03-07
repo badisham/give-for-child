@@ -7,7 +7,7 @@ import { Jumbotron, Container, Row, Col, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
+
 
 const LoginAdmin = () => {
     const history = useHistory();

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import 'reactjs-line-login/dist/index.css';
 
 function Login() {
-    axios.defaults.baseURL = 'http://localhost:3001/';
+    
     const history = useHistory();
 
     const [payload, setPayload] = useState(null);

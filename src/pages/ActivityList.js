@@ -5,6 +5,7 @@ import { Container, Row, Tab, Tabs, Card, Button, CardDeck, Col } from 'react-bo
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import './css/ActivityList.css';
 import './css/Activity.css';
+import Footer from '../components/Footer'
 
 import axios from 'axios';
 import { BsFillPersonFill } from 'react-icons/bs';
@@ -42,45 +43,50 @@ const ActivityList = () => {
         });
     };
 
-    const cencelActivity = (path, id) => {
+    const confirm = (method) => {
         Swal.fire({
             title: 'ยกเลิกกิจกรรมหรือไม่',
             text: 'คุณสามารถเลือกดูหน้ากิจกรรมได้',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#ccc',
+            cancelButtonColor: '#3085d6',
             confirmButtonText: 'ตกลง',
+            cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${path}${id}`).then((res) => {
-                    if (res.status == 200) {
-                        Swal.fire({
-                            title: 'Deleted!',
-                            text: 'Your file has been deleted.',
-                            icon: 'success',
-                            confirmButtonColor: 'Green',
-                            confirmButtonText: 'Ok',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                InitialData();
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Fail!',
-                            text: '',
-                            icon: 'error',
-                        });
-                    }
-                });
+                method();
             }
         });
     };
+    
+    const cancel = (path,id) => {
+        axios.delete(`${path}${id}`).then((res) => {
+            if (res.status == 200) {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Your file has been deleted.',
+                    icon: 'success',
+                    confirmButtonColor: 'Green',
+                    confirmButtonText: 'Ok',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        InitialData();
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Fail!',
+                    text: '',
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     return (
         <>
-            <Container className='all-font'>
+            <Container className='all-font mb-5'>
                 <br />
                 <h3>รายการ</h3>
                 <br />
@@ -103,7 +109,7 @@ const ActivityList = () => {
                                             <div
                                                 className='head-card'
                                                 style={{
-                                                    backgroundImage: `url('${data.image}')`,
+                                                    backgroundImage: `url('./resources/uploads/${data.image}')`,
                                                 }}
                                             ></div>
                                             {/* <Card.Img variant='top' src= /> */}
@@ -157,7 +163,7 @@ const ActivityList = () => {
                                                     }}
                                                     variant=''
                                                     onClick={() => {
-                                                        cencelActivity('/activity/member/', data.id);
+                                                        confirm(() => {cancel('/activity/member/', data.id)});
                                                     }}
                                                 >
                                                     ยกเลิก
@@ -233,7 +239,7 @@ const ActivityList = () => {
                                                 </Card.Text>
 
                                                 <Card.Text>
-                                                    รายละเอียด :{' '}
+                                                    {' '}
                                                     {data.description.substring(0, 80) +
                                                         (data.description.length > 40 ? '...' : '')}
                                                 </Card.Text>
@@ -247,7 +253,7 @@ const ActivityList = () => {
                                                     }}
                                                     variant=''
                                                     onClick={() => {
-                                                        cencelActivity('/donation/', data.id);
+                                                        confirm(() => {cancel('/donation/', data.id)});
                                                     }}
                                                 >
                                                     ยกเลิก
@@ -360,7 +366,7 @@ const ActivityList = () => {
                                                     }}
                                                     variant=''
                                                     onClick={() => {
-                                                        cencelActivity('/booking/', data.id);
+                                                        confirm(() => {cancel('/booking/', data.id)});
                                                     }}
                                                 >
                                                     ยกเลิก
@@ -374,66 +380,8 @@ const ActivityList = () => {
                     </Tabs>
                 </div>
 
-                <div className='footer'>
-                    <Row>
-                        <Col style={{ textAlign: 'center' }}>
-                            <Link to='/'>
-                                <img src='./resources/logo.png' style={{ width: 105 }} alt='' />
-                            </Link>
-                        </Col>
-                        <Col>
-                            ที่ตั้ง : มหาวิทยาลัยศิลปากร เมืองทองธานี
-                            <br />
-                            เลขที่ 80 ถนนป๊อปปูล่า ต.บ้านใหม่ อำเภอปากเกร็ด จังหวัดนนทบุรี 11120
-                            <br />
-                            โทรศัพท์ : 093-165-4886
-                            <br />
-                            E-mail : give-for-child@gmail.com
-                        </Col>
-                        <Col style={{ marginLeft: '5%' }}>
-                            <Link className='link-footer' to='/activity'>
-                                กิจกรรม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/booking'>
-                                จองกิจกรรม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/donate'>
-                                การบริจาค
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/activity-list'>
-                                รายการที่เข้าร่วม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/profile'>
-                                ผู้ใช้งาน
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/logout'>
-                                ออกจากระบบ
-                            </Link>
-                            <br />
-                        </Col>
-                        <Col sm>
-                            <Link to='/'>
-                                <img src='./resources/facebook.png' style={{ width: 25 }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/instagram.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/twitter.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/youtube.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                            </Link>
-                        </Col>
-                    </Row>
-                    <div className='copy'>Copyright © 2021 All Rights Reserved | Give-for-chlid</div>
-                </div>
             </Container>
+            <Footer/>
         </>
     );
 };

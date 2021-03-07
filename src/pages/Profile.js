@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Container, ListGroup, Form, Tabs, Tab, Col, CardDeck, Card, Row, Accordion } from 'react-bootstrap';
+import { Container, ListGroup, Form, Tabs, Tab, Col, CardDeck, Card, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Profile.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 import moment from 'moment';
 import { BsFillPersonFill } from 'react-icons/bs';
 
@@ -37,21 +37,23 @@ function Profile() {
         });
     };
     return (
-        <Container className='all-font'>
+        <>
+        
+        <Container className='all-font mb-5'>
             <br />
             <Form>
                 <h3>โปรไฟล์ของฉัน</h3>
                 <Row>
-                    <Col xs={6} md={4}>
+                    <Col xs={12} md={6}>
                         <br />
                         <div className='profile' style={{ textAlign: 'center' }}>
                             <img src={localStorage.getItem('imgProfile')} />
                         </div>
                         <br />
                     </Col>
-                    <Col xs={6} md={4}>
+                    <Col xs={12} md={6}>
                         <br />
-                        <div style={{ textAlign: 'left' }}>
+                        <div className="profile_info">
                             <span className='name-profile'>{localStorage.getItem('name')}</span>
                             <br />
 
@@ -93,7 +95,7 @@ function Profile() {
                                             <div
                                                 className='head-card'
                                                 style={{
-                                                    backgroundImage: `url('${data.image}')`,
+                                                    backgroundImage: `url('./resources/uploads/${data.image}')`,
                                                 }}
                                             ></div>
                                             {/* <Card.Img variant='top' src= /> */}
@@ -319,66 +321,9 @@ function Profile() {
                     </Tabs>
                 </div>
             </Form>
-            <div className='footer'>
-                <Row>
-                    <Col style={{ textAlign: 'center' }}>
-                        <Link to='/'>
-                            <img src='./resources/logo.png' style={{ width: 105 }} alt='' />
-                        </Link>
-                    </Col>
-                    <Col>
-                        ที่ตั้ง : มหาวิทยาลัยศิลปากร เมืองทองธานี
-                        <br />
-                        เลขที่ 80 ถนนป๊อปปูล่า ต.บ้านใหม่ อำเภอปากเกร็ด จังหวัดนนทบุรี 11120
-                        <br />
-                        โทรศัพท์ : 093-165-4886
-                        <br />
-                        E-mail : give-for-child@gmail.com
-                    </Col>
-                    <Col style={{ marginLeft: '5%' }}>
-                        <Link className='link-footer' to='/activity'>
-                            กิจกรรม
-                        </Link>
-                        <br />
-                        <Link className='link-footer' to='/booking'>
-                            จองกิจกรรม
-                        </Link>
-                        <br />
-                        <Link className='link-footer' to='/donate'>
-                            การบริจาค
-                        </Link>
-                        <br />
-                        <Link className='link-footer' to='/activity-list'>
-                            รายการที่เข้าร่วม
-                        </Link>
-                        <br />
-                        <Link className='link-footer' to='/profile'>
-                            ผู้ใช้งาน
-                        </Link>
-                        <br />
-                        <Link className='link-footer' to='/logout'>
-                            ออกจากระบบ
-                        </Link>
-                        <br />
-                    </Col>
-                    <Col sm>
-                        <Link to='/'>
-                            <img src='./resources/facebook.png' style={{ width: 25 }} alt='' />
-                        </Link>
-                        <Link to='/'>
-                            <img src='./resources/instagram.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                        </Link>
-                        <Link to='/'>
-                            <img src='./resources/twitter.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                        </Link>
-                        <Link to='/'>
-                            <img src='./resources/youtube.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                        </Link>
-                    </Col>
-                </Row>
-                <div className='copy'>Copyright © 2021 All Rights Reserved | Give-for-chlid</div>
-            </div>
         </Container>
+        <Footer/>
+        </>
     );
 }
 

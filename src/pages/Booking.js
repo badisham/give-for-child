@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Modal, Row, Col } from 'react-bootstrap';
-import { FaHome, FaMapMarkerAlt } from 'react-icons/fa';
-import { BsFillPersonFill, BsCalendarFill } from 'react-icons/bs';
-import { AiFillPhone } from 'react-icons/ai';
-import Datetime from 'react-datetime';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Booking.css';
-import { Link, useHistory } from 'react-router-dom';
+import Footer from '../components/Footer';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
+
 const BANQUET = 'เลี้ยงอาหารเด็ก';
 const REQUEST = 'จัดหาให้';
 const BYMYSELF = 'นำมาเอง';
@@ -22,6 +19,7 @@ const Option = (value, name) => {
         </option>
     );
 };
+
 function Booking() {
     const history = useHistory();
     const [cat, setCat] = useState([]);
@@ -34,23 +32,24 @@ function Booking() {
     const [categorySelect, setCategorySelect] = useState('');
     const [optionSelect, setOptionSelect] = useState('');
 
-    const [name, setName] = useState('');
-    const [tel, setTel] = useState('');
-    const [date, setDate] = useState('');
-    const [location, setLocation] = useState('');
-    const [description, setDescription] = useState('');
+    // const [name, setName] = useState('');
+    // const [tel, setTel] = useState('');
+    // const [date, setDate] = useState('');
+    // const [location, setLocation] = useState('');
+    // const [description, setDescription] = useState('');
 
-    // let name = '';
-    // let tel = '';
-    // let date = '';
-    // let location = '';
-    // let description = '';
+    let name = '';
+    let tel = '';
+    let date = '';
+    let description = '';
 
     // เลี้ยงอาหาร
-    let duration = '';
-    let budget = 0;
-    let file = null;
+    // const [duration, setDuration] = useState('');
+    // const [budget, setBudget] = useState(0);
     // const [file, setFile] = useState(null);
+    let duration;
+    let budget;
+    let file;
 
     useEffect(() => {
         Initial();
@@ -135,8 +134,8 @@ function Booking() {
                         as='select'
                         onChange={(e) => {
                             duration = e.target.value;
-                            // setDuration(e.target.value);
                         }}
+
                         className='border-test'
                     >
                         <option>เลือก</option>
@@ -212,12 +211,11 @@ function Booking() {
             !name ||
             !tel ||
             !date ||
-            !location ||
             !description
         ) {
             Swal.fire('', 'กรอกข้อมูลให้ครบ', 'warning');
             console.log(1);
-            // return;
+            return;
         }
 
         let data = {
@@ -228,7 +226,6 @@ function Booking() {
             name: name,
             tel: tel,
             date: date,
-            location: location,
             description: description,
         };
         if (BANQUET === categorySelect) {
@@ -247,8 +244,6 @@ function Booking() {
                 data = { ...data, ...{ budget: budget } };
             }
         }
-        console.log(data);
-        return;
         let form = new FormData();
         if (REQUEST === optionSelect) {
             form.append('file', file);
@@ -275,7 +270,7 @@ function Booking() {
     };
     return (
         <>
-            <Container className='all-font'>
+            <Container className='all-font mb-5'>
                 <br />
 
                 <h3>จองกิจกรรม</h3>
@@ -347,11 +342,6 @@ function Booking() {
                         </Col>
                     </Row>
 
-                    <Row>
-                        {optionSelect == REQUEST || optionSelect == BYMYSELF ? <FormDuration /> : null}
-                        {optionSelect == REQUEST ? <FormBudget /> : null}
-                        {optionSelect == REQUEST ? <FormSlip /> : null}
-                    </Row>
 
                     <Row>
                         <Col sm>
@@ -363,9 +353,10 @@ function Booking() {
                                 <Form.Control
                                     required
                                     type='text'
-                                    value={name}
+                                    // value={name}
                                     onChange={(e) => {
-                                        setName(e.target.value);
+                                        name = e.target.value;
+                                        // setName(e.target.value);
                                     }}
                                     placeholder='กรอกชื่อนามสกุล'
                                     className='border-test'
@@ -381,54 +372,37 @@ function Booking() {
                                 <Form.Control
                                     required
                                     type='text'
-                                    value={tel}
+                                    pattern="[0-9]+"
+                                    // value={tel}
                                     onChange={(e) => {
-                                        setTel(e.target.value);
+                                        tel = e.target.value;
+                                        // setTel(e.target.value);
                                     }}
                                     placeholder='กรอกเบอร์โทรศัพท์'
                                     className='border-test'
                                 />
                             </Form.Group>
                         </Col>
-                    </Row>
-
-                    <Row>
                         <Col sm>
                             <Form.Group controlId='date'>
                                 <Form.Label className=' text-lable '>
                                     <img src='./resources/icon-show-calenda.png' style={{ width: 23 }} alt='' />
-                                    <span className='header-text'>วันที่</span>
+                                    <span className='header-text'>วันที่จอง</span>
                                 </Form.Label>
                                 <Form.Control
                                     required
                                     type='date'
-                                    value={date}
+                                    // value={date}
                                     onChange={(e) => {
-                                        setDate(e.target.value);
+                                        date = e.target.value;
+                                        // setDate(e.target.value);
                                     }}
-                                    className='border-test'
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col sm>
-                            <Form.Group controlId='location'>
-                                <Form.Label className=' text-lable '>
-                                    <img src='./resources/icon-show.png' style={{ width: 23 }} alt='' />
-                                    <span className='header-text'>สถานที่</span>
-                                </Form.Label>
-                                <Form.Control
-                                    required
-                                    type='text'
-                                    value={location}
-                                    onChange={(e) => {
-                                        setLocation(e.target.value);
-                                    }}
-                                    placeholder='กรอกสถานที่'
                                     className='border-test'
                                 />
                             </Form.Group>
                         </Col>
                     </Row>
+
 
                     <Form.Group controlId='description'>
                         <Form.Label className=' text-lable '>
@@ -442,87 +416,34 @@ function Booking() {
                             rows={3}
                             placeholder='กรอกรายละเอียด'
                             className='border-test '
-                            value={description}
+                            // value={description}
                             onChange={(e) => {
-                                setDescription(e.target.value);
+                                description = e.target.value;
+                                // setDescription(e.target.value);
                             }}
                         />
                     </Form.Group>
                 </Form>
+                    <Row>
+                        {optionSelect == REQUEST || optionSelect == BYMYSELF ? <FormDuration /> : null}
+                        {optionSelect == REQUEST ? <FormBudget /> : null}
+                        {optionSelect == REQUEST ? <FormSlip /> : null}
+                    </Row>
                 <br />
                 <Row xs={2} md={4} lg={6}>
-                    <Col>
-                        <Button className='buttonW' variant='info' onClick={Confirm}>
-                            ยืนยัน
-                        </Button>
-                    </Col>
                     <Col>
                         <Button className='buttonB' variant='info'>
                             กลับ
                         </Button>
                     </Col>
+                    <Col>
+                        <Button className='buttonW' onClick={Confirm} variant='info'>
+                            ยืนยัน
+                        </Button>
+                    </Col>
                 </Row>
-
-                <div className='footer'>
-                    <Row>
-                        <Col style={{ textAlign: 'center' }}>
-                            <Link to='/'>
-                                <img src='./resources/logo.png' style={{ width: 105 }} alt='' />
-                            </Link>
-                        </Col>
-                        <Col>
-                            ที่ตั้ง : มหาวิทยาลัยศิลปากร เมืองทองธานี
-                            <br />
-                            เลขที่ 80 ถนนป๊อปปูล่า ต.บ้านใหม่ อำเภอปากเกร็ด จังหวัดนนทบุรี 11120
-                            <br />
-                            โทรศัพท์ : 093-165-4886
-                            <br />
-                            E-mail : give-for-child@gmail.com
-                        </Col>
-                        <Col style={{ marginLeft: '5%' }}>
-                            <Link className='link-footer' to='/activity'>
-                                กิจกรรม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/booking'>
-                                จองกิจกรรม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/donate'>
-                                การบริจาค
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/activity-list'>
-                                รายการที่เข้าร่วม
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/profile'>
-                                ผู้ใช้งาน
-                            </Link>
-                            <br />
-                            <Link className='link-footer' to='/logout'>
-                                ออกจากระบบ
-                            </Link>
-                            <br />
-                        </Col>
-                        <Col sm>
-                            <Link to='/'>
-                                <img src='./resources/facebook.png' style={{ width: 25 }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/instagram.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/twitter.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                            </Link>
-                            <Link to='/'>
-                                <img src='./resources/youtube.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
-                            </Link>
-                        </Col>
-                    </Row>
-                    <div className='copy'>Copyright © 2021 All Rights Reserved | Give-for-chlid</div>
-                </div>
             </Container>
+            <Footer/>
         </>
     );
 }

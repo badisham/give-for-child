@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Table, Form, InputGroup, FormControl, Button, Card, Pagination, Row, Col } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 import axios from 'axios';
+import { BsArrowLeftShort } from 'react-icons/bs';
 
 // let name = '';
 // let tel = '';
@@ -107,14 +108,13 @@ const ActivityBack = (props) => {
             }}
         >
             <div className='all-font' style={{ padding: '3rem' }}>
+                <Link to='/backend/activity-back'>
+                    <Row style={{ paddingLeft: '16px' }}>
+                        <BsArrowLeftShort size={28} color={'#000000'} />
+                        <div className='text-back'>ย้อนกลับ </div>
+                    </Row>
+                </Link>
                 <Card style={{ padding: '1.5rem' }}>
-                    <div>
-                        <Button variant='danger'>
-                            <Link to='/backend/activity-back' style={{ color: 'white' }}>
-                                กลับ
-                            </Link>
-                        </Button>
-                    </div>
                     <Card.Title style={{ marginTop: '2%' }}>แก้ไขข้อมูล</Card.Title>
                     <Form>
                         {name === null ? (

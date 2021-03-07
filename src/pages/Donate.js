@@ -11,9 +11,9 @@ const Donate = () => {
     };
 
     return (
-        <Container className='all-font '>
+        <Container className='all-font ' style={{paddingBottom:50}}>
             <Card style={{ marginTop: 20 }}>
-                <Card.Img variant='top' src='./resources/banner1-3.jpg' />
+                <div className='cover-donate' style={{backgroundImage:`url(./resources/banner1-3.jpg)`}}></div>
                 <Card.Body>
                     <Card.Title>การบริจาค</Card.Title>
                     <Card.Text>รายละเอียดและเงื่อนไขการบริจาค</Card.Text>

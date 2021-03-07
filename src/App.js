@@ -40,9 +40,11 @@ import CreateAdmin from './backoffice/CreateAdmin';
 import Foundation from './backoffice/Foundation';
 import Catagory from './backoffice/Foundation-catagory';
 import Option from './backoffice/Foundation-option';
+import GenerateJson from './backoffice/GenerateJson'
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:3001/';
+// axios.defaults.baseURL = 'http://localhost:3001/';
 
 const PrivateAdmin = () => {
     return (
@@ -57,6 +59,7 @@ const PrivateAdmin = () => {
                 <Route path='/backend/booking-back' exact component={BookingBack} />
                 <Route path='/backend/activity-edit/:id' exact component={ActivityEdit} />
                 <Route path='/backend/join-activity' exact component={JoinActivity} />
+                <Route path='/backend/generate-json' exact component={GenerateJson} />
                 <Route path='/backend/foundation' exact component={Foundation} />
                 <Route path='/backend/foundation/:name' exact component={Catagory} />
                 <Route path='/backend/foundation/:foundation/:name' exact component={Option} />

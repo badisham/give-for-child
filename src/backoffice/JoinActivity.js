@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Form, InputGroup, FormControl, Button, Card, Pagination, Row } from 'react-bootstrap';
+import { Table, Form, FormControl, Button, Card } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 import './css/ActivityBack.css';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
+
 
 const DateThai = (date) => {
     return date.toLocaleDateString('th-TH', {
@@ -17,6 +18,7 @@ const DateThai = (date) => {
 
 var setTimeOut;
 const JoinActivity = () => {
+    
     const [rowData, setRowData] = useState([]);
 
     useEffect(() => {
@@ -33,9 +35,12 @@ const JoinActivity = () => {
     }, [search]);
 
     const updateRows = async (search = null) => {
-        const searchParam = search ? `?search=${search}` : '';
+        let data = {
+            foundation: localStorage.getItem('foundation'),
+            search: search
+        }
         axios
-            .get(`/join_activity/foundation/${localStorage.getItem('foundation')}${searchParam}`)
+            .post(`/join_activity/foundation/`,data)
             .then((res) => {
                 if (res.data) {
                     setRowData(res.data.map((v) => setRow(v)));
@@ -58,6 +63,37 @@ const JoinActivity = () => {
                 console.log(err);
             });
     };
+    
+    const confirm = (methed) => {
+        Swal.fire({
+            title: 'ยืนยัน',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0062cc',
+            cancelButtonColor: '#ccc',
+            confirmButtonText: 'ลบ',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                methed();
+            }
+        });
+    };
+    
+    const cancelJoinActivity = async (id) => {
+        await axios.delete(`/join_activity/${id}`).then((res) => {
+            Swal.fire({
+                title: 'ลบแล้ว',
+                icon: 'success',
+                confirmButtonColor: 'Green',
+                confirmButtonText: 'ตกลง',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateRows();
+                }
+            });
+        });
+    }
 
     const setRow = (data) => {
         // ใส่ชื่อ column ทั้งหมดตาม table
@@ -78,7 +114,7 @@ const JoinActivity = () => {
                         <Button
                             variant='success'
                             onClick={() => {
-                                JoinActivitySuccess(data.join_id);
+                                confirm(() => {JoinActivitySuccess(data.join_id);})
                             }}
                         >
                             สำเร็จ
@@ -86,7 +122,11 @@ const JoinActivity = () => {
                     )}
                 </td>
                 <td>
-                    <Button variant='outline-danger'>
+                    <Button variant='outline-danger'
+                        onClick={() => {
+                            confirm(() => {cancelJoinActivity(data.join_id)})
+                        }}
+                    >
                         <BsTrash />
                     </Button>
                 </td>
@@ -121,7 +161,7 @@ const JoinActivity = () => {
                     <Table striped hover style={{ marginTop: '1.5%' }}>
                         <thead>
                             <tr>
-                                <th>id</th>
+                                <th>ID</th>
                                 <th>ชื่อกิจกรรม</th>
                                 <th>ผู้เข้าร่วมมกิจกรรม</th>
                                 <th>เบอร์โทรศัพท์</th>

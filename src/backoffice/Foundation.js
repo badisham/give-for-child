@@ -5,13 +5,14 @@ import './css/ActivityBack.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
+
 
 const Foundation = () => {
     const [file, setFile] = useState(null);
     const [rowData, setRowData] = useState([]);
     const [name, setName] = useState('');
     const [url, setUrl] = useState('');
+    const [address, setAddress] = useState('');
 
     useEffect(() => {
         updateRows();
@@ -55,6 +56,7 @@ const Foundation = () => {
                         {data.name}
                     </a>
                 </td>
+                <td>{data.address}</td>
                 <td>
                     <Link to={`/backend/foundation/${data.name}`}>
                         <button className='btn btn-info'>Catagory</button>
@@ -75,13 +77,14 @@ const Foundation = () => {
     };
 
     const onSubmit = async () => {
-        if (!file || !name || !url) {
+        if (!file || !name || !url || !address) {
             Swal.fire('', 'กรอกข้อมูลให้ครบ', 'warning');
             return;
         }
         const data = {
             name: name,
             url: url,
+            address: address
         };
         let form = new FormData();
         form.append('file', file);
@@ -142,6 +145,7 @@ const Foundation = () => {
 
     const [show, setShow] = useState(false);
 
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -178,7 +182,8 @@ const Foundation = () => {
                             <tr>
                                 <th width='50'>ID</th>
                                 <th width='100'>รูป</th>
-                                <th width='400'>ชื่อ</th>
+                                <th width='200'>ชื่อ</th>
+                                <th width='350'></th>
                                 <th width='80'></th>
                                 <th width='80'></th>
                             </tr>
@@ -213,6 +218,11 @@ const Foundation = () => {
                             }}
                         />
                     </Form.Group>
+                    <Form.Group controlId='Form.url'>
+                        <Form.Label>ที่อยู่</Form.Label>
+                        <Form.Control as="textarea" rows={3} onChange={(e) => {setAddress(e.target.value)}}
+                        />
+                    </Form.Group>
                     <Form.Group controlId='Image'>
                         <Form.Label>เลือกรูปภาพ</Form.Label>
                         <Form.Control type='file' onChange={onImgChange} />
@@ -226,6 +236,7 @@ const Foundation = () => {
                     </Form.Group>
                 </Modal.Body>
             </Modal>
+            
         </div>
     );
 };

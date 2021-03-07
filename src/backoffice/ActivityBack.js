@@ -6,34 +6,6 @@ import './css/ActivityBack.css';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-const cencelActivity = (id) => {
-    Swal.fire({
-        title: 'ลบรายการนี้หรือไม่',
-        text: 'เมื่อรายการนี้ถูกลบ คุณจะไม่สามารถกู้คืนได้',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios.delete(`/activity/${id}/`).then((res) => {
-                Swal.fire({
-                    title: 'Deleted!',
-                    text: 'Your file has been deleted.',
-                    icon: 'success',
-                    confirmButtonColor: 'Green',
-                    confirmButtonText: 'Ok',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.reload();
-                    }
-                });
-            });
-        }
-    });
-};
-
 const DateThai = (date) => {
     return date.toLocaleDateString('th-TH', {
         year: 'numeric',
@@ -60,10 +32,12 @@ const ActivityBack = () => {
     }, [search]);
 
     const updateRows = async (search = null) => {
-        const searchParam = search ? `&search=${search}` : '';
-        console.log(searchParam);
+        let data = {
+            foundation: localStorage.getItem('foundation'),
+            search: search
+        }
         axios
-            .get(`/activities/foundation/${localStorage.getItem('foundation')}${searchParam}`)
+            .post(`/activities/foundation/`,data)
             .then((res) => {
                 if (res.data) {
                     setRowData(res.data.map((v) => setRow(v)));
@@ -73,6 +47,39 @@ const ActivityBack = () => {
                 console.log(err);
             });
     };
+        
+    const confirm = (methed) => {
+        Swal.fire({
+            title: 'ยืนยัน',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0062cc',
+            cancelButtonColor: '#ccc',
+            confirmButtonText: 'ลบ',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                methed();
+            }
+        });
+    };
+
+    const cancelActivity = (id) => {
+        axios.delete(`/activity/${id}/`).then((res) => {
+            Swal.fire({
+                title: 'เรียบร้อย',
+                // text: 'Your file has been deleted.',
+                icon: 'success',
+                confirmButtonColor: 'Green',
+                confirmButtonText: 'ตกลง',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateRows();
+                }
+            });
+        });
+    }
+
 
     const setRow = (data) => {
         // ใส่ชื่อ column ทั้งหมดตาม table
@@ -90,16 +97,16 @@ const ActivityBack = () => {
                 </td>
                 <td>{data.person_max}</td>
                 <td>
-                    <Button variant='warning'>
-                        <Link to={`/backend/activity-edit/${data.id}`} style={{ color: 'white' }}>
-                            แก้ไข
-                        </Link>
-                    </Button>
+                    <Link to={`/backend/activity-edit/${data.id}`} style={{ color: 'white' }}>
+                        <Button variant='warning'>
+                                แก้ไข
+                        </Button>
+                    </Link>
                 </td>
                 <td>
                     <Button
                         onClick={() => {
-                            cencelActivity(data.id);
+                            confirm(() => { cancelActivity(data.id);})
                         }}
                         variant='outline-danger'
                     >
@@ -123,11 +130,11 @@ const ActivityBack = () => {
                 <Card style={{ padding: '1.5rem' }}>
                     <Card.Title>กิจกรรม</Card.Title>
                     <div>
-                        <Button variant='primary'>
-                            <Link to='/backend/create-activity' style={{ color: 'white' }}>
-                                สร้างกิจกรรม
-                            </Link>
-                        </Button>
+                        <Link to='/backend/create-activity' style={{ color: 'white' }}>
+                            <Button variant='primary'>
+                                    สร้างกิจกรรม
+                            </Button>
+                        </Link>
                     </div>
 
                     <Form inline>
@@ -146,7 +153,7 @@ const ActivityBack = () => {
                     <Table striped hover style={{ marginTop: '1.5%' }}>
                         <thead>
                             <tr>
-                                <th>id</th>
+                                <th>ID</th>
                                 <th>รูปภาพ</th>
                                 <th>ชื่อกิจกรรม</th>
                                 <th>เบอร์โทรศัพท์</th>

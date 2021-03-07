@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import moment from 'moment';
 import { Container, Col, Row, Tab, Tabs, Card, Button, CardDeck, Image } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 
 import axios from 'axios';
 import { BsFillPersonFill } from 'react-icons/bs';
@@ -13,6 +13,7 @@ import Footer from '../components/Footer';
 let key = 'all';
 
 const Activity = () => {
+    const history = useHistory();
     const [activityNow, setActivityNow] = useState([]);
     const [activityComing, setActivityComing] = useState([]);
 
@@ -33,6 +34,24 @@ const Activity = () => {
         });
     };
 
+    
+    const Confirm = (id) => {
+        Swal.fire({
+            title: 'ยืนยันเข้าร่วม',
+            text: '',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#ccc',
+            confirmButtonText: 'ตกลง',
+            cancelButtonText: 'ยกเลิก',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                joinActivity(id);
+            }
+        });
+    };
+
     const joinActivity = async (activity_id) => {
         const data = {
             activity_id: activity_id,
@@ -43,7 +62,10 @@ const Activity = () => {
                 .post('/join-activity', data)
                 .then(function (res) {
                     Swal.fire('', res.data, 'success');
-                    InitialData();
+                    history.push({
+                        pathname: '/activity-list',
+                        search: '?tab=activity',
+                    });
                 })
                 .catch(function (err) {
                     Swal.fire('', 'ไม่สามารถเข้าร่วมได้', 'error');
@@ -68,7 +90,7 @@ const Activity = () => {
                     }}
                     variant=''
                     onClick={() => {
-                        joinActivity(data.id);
+                        Confirm(data.id);
                     }}
                     disabled={data.person >= data.person_max}
                 >
@@ -126,7 +148,8 @@ const Activity = () => {
                         </Col>
 
                         <Col md={{ span: 5, offset: 2 }} xs={{ span: 5, offset: 2 }}>
-                            <Button
+                            <Link to={`/activity-detail/${data.id}`} style={{ color: 'white' }}>
+                                <Button
                                 className='font-button'
                                 style={{
                                     width: '100%',
@@ -135,10 +158,9 @@ const Activity = () => {
                                 }}
                                 variant=''
                             >
-                                <Link to={`/activity-detail/${data.id}`} style={{ color: 'white' }}>
                                     ดูรายละเอียด
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         </Col>
                     </Row>
                 </Card.Body>
@@ -168,8 +190,8 @@ const Activity = () => {
                     </Tabs>
                 </div>
                 <br />
-                <Footer />
             </Container>
+            <Footer />
         </div>
     );
 };

@@ -5,7 +5,7 @@ import './css/ActivityBack.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
+
 
 const Member = () => {
     const [rowData, setRowData] = useState([]);

@@ -1,19 +1,25 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col , Container} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../pages/css/Header.css';
 
 const Footer = () => {
+    
+    const onErrorLogo = (e) => {
+        e.target.src = '/resources/logo.png';
+    };
+
     return (
-        <div className=''>
+        <div id="footer" style={{paddingTop:50}}>
+            <Container>
             <Row>
                 <Col style={{ textAlign: 'center' }}>
                     <Link to='/'>
-                        <img src='./resources/logo.png' style={{ width: 105 }} alt='' />
+                        <img src='./resources/logo.png' onError={onErrorLogo} style={{ width: 105 }} alt='' />
                     </Link>
                 </Col>
-                <Col>
+                <Col id="address">
                     ที่ตั้ง : มหาวิทยาลัยศิลปากร เมืองทองธานี
                     <br />
                     เลขที่ 80 ถนนป๊อปปูล่า ต.บ้านใหม่ อำเภอปากเกร็ด จังหวัดนนทบุรี 11120
@@ -50,20 +56,21 @@ const Footer = () => {
                 </Col>
                 <Col sm className='wrap-social'>
                     <Link to='/'>
-                        <img src='./resources/facebook.png' style={{ width: 25 }} alt='' />
+                        <img className='footer-social' src='./resources/facebook.png' style={{ width: 25 }} alt='' />
                     </Link>
                     <Link to='/'>
-                        <img src='./resources/instagram.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
+                        <img className='footer-social' src='./resources/instagram.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
                     </Link>
                     <Link to='/'>
-                        <img src='./resources/twitter.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
+                        <img className='footer-social' src='./resources/twitter.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
                     </Link>
                     <Link to='/'>
-                        <img src='./resources/youtube.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
+                        <img className='footer-social' src='./resources/youtube.png' style={{ width: 25, marginLeft: '6%' }} alt='' />
                     </Link>
                 </Col>
             </Row>
             <div className='copy'>Copyright © 2021 All Rights Reserved | Give-for-chlid</div>
+            </Container>
         </div>
     );
 };
